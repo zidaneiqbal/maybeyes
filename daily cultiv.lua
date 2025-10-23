@@ -1,73 +1,3 @@
-if not game:IsLoaded() then
-    game.Loaded:Wait()
-end
-
-local currentGameId = game.PlaceId
-local TARGET_GAME_ID = 18645473062
-webhookURL =
-    'https://discord.com/api/webhooks/1427270496797589606/Wg1Lt11GaVxKwrl3vlQCVuG4WqcH2VRkOOrEENCn5I-DHYx5IiXmmxptyIkN81fx_WGP'
-
-if currentGameId == TARGET_GAME_ID then
-    print('检测到目标游戏，正在执行脚本...')
-
-    -- Wait for player and player GUI to exist
-    local player = game:GetService('Players').LocalPlayer
-    while not player:FindFirstChild('PlayerGui') do
-        task.wait(1)
-    end
-    local playerGui = player.PlayerGui
-
-    -- Function to safely find the loading GUI
-    local function findLoadingGui()
-        local maxAttempts = 30
-        for i = 1, maxAttempts do
-            local success, gui = pcall(function()
-                return playerGui.GUI['\228\186\140\231\186\167\231\149\140\233\157\162']['\229\138\160\232\189\189\233\161\181\233\157\162']
-            end)
-            if success and gui then
-                return gui
-            end
-            task.wait(0.5)
-        end
-        return nil
-    end
-
-    -- Main waiting logic
-    local loadingGui = findLoadingGui()
-
-    if loadingGui then
-        print('Loading...')
-
-        -- Wait for it to become visible if not already
-        if not loadingGui.Visible then
-            local visibleChanged = false
-            local connection = loadingGui
-                :GetPropertyChangedSignal('Visible')
-                :Connect(function()
-                    visibleChanged = true
-                end)
-
-            -- Timeout after 25 seconds if never becomes visible
-            local startTime = os.time()
-            while not visibleChanged and os.time() - startTime < 25 do
-                task.wait(0.1)
-            end
-            connection:Disconnect()
-        end
-
-        -- Now wait for it to become invisible
-        if loadingGui.Visible then
-            print('Waiting Loading to disappear...')
-            while loadingGui.Parent and loadingGui.Visible do
-                loadingGui:GetPropertyChangedSignal('Visible'):Wait()
-                task.wait(0.1)
-            end
-        end
-    else
-        warn('⚠️ No Loading Screen，Executing Script...')
-    end
-
-    print('✅ Loading Complete, Continue Executing Script...')
     local library = loadstring(
         game:HttpGet(
             'https://raw.githubusercontent.com/supleruckydior/test/refs/heads/main/menu.json',
@@ -3290,3 +3220,4 @@ end)
 else
     warn('当前游戏不是目标游戏，脚本未运行。')
 end
+
