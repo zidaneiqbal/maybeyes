@@ -300,7 +300,7 @@ if currentGameId == TARGET_GAME_ID then
                     end
                     herbController.enabled = false
                 end
-                -- toggleGuildUI(false)
+                toggleGuildUI(false)
                 task.wait(0.5)
                 break
             else
@@ -329,7 +329,7 @@ if currentGameId == TARGET_GAME_ID then
                     herbBuyFinished = true
                     herbController.enabled = false
                 end
-                -- toggleGuildUI(false)
+                toggleGuildUI(false)
                 task.wait(0.5)
             end
         end -- 关闭 while
@@ -442,7 +442,6 @@ if currentGameId == TARGET_GAME_ID then
         sendWebhook()
     end)
     wait(0.5)
-    toggleGuildUI(false)
     label.Text = "Herbs Purchasing..."
     herbLoop()
     label.Text = "Herbs Purchased"
