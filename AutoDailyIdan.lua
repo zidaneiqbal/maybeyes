@@ -50,9 +50,9 @@ if currentGameId == TARGET_GAME_ID then
                     visibleChanged = true
                 end)
 
-            -- Timeout after 25 seconds if never becomes visible
+            -- Timeout after 10 seconds if never becomes visible
             local startTime = os.time()
-            while not visibleChanged and os.time() - startTime < 25 do
+            while not visibleChanged and os.time() - startTime < 10 do
                 task.wait(0.1)
             end
             connection:Disconnect()
