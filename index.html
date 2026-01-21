@@ -412,7 +412,7 @@
         function timeAgo(d) { const s = Math.floor((new Date() - new Date(d)) / 1000); if (s < 60) return "Just now"; if (s < 3600) return Math.floor(s / 60) + "m ago"; if (s < 86400) return Math.floor(s / 3600) + "h ago"; return "1d+ ago"; }
         function populateGuilds() {
             const cur = document.getElementById('guildFilter').value;
-            const gs = new Set(allData.map(p => p.data?.guild || "No Guild"));
+            const gs = new Set(allData.map(p => p.guild || "No Guild"));
             const sel = document.getElementById('guildFilter'); sel.innerHTML = '<option value="All">All Guilds</option>';
             Array.from(gs).filter(g => g && g !== "None").sort().forEach(g => { const o = document.createElement('option'); o.value = g; o.innerText = g; sel.appendChild(o) });
             sel.value = cur;
