@@ -393,7 +393,7 @@
                         <td class="p-4 text-right font-mono text-green-400">${formatCompact(herb)}</td>
                         <td class="p-4 text-right font-mono text-yellow-400">${formatStandard(guild_coin)}</td>
                         <td class="p-4 text-right font-mono text-pink-400">${soul}</td>
-                        <td class="p-4 text-right text-xs text-slate-500">${timeAgo(p.data.last_updated)}</td>
+                        <td class="p-4 text-right text-xs text-slate-500">${timeAgo(p.last_updated)}</td>
                     </tr>
                 `;
                 tbody.innerHTML += row;
