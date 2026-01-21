@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ultimate Clan Dashboard</title>
+    <title>Cult Sim Account Data</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
@@ -100,6 +100,31 @@
 
 <body class="bg-dark text-slate-300 font-sans min-h-screen p-4 md:p-8">
 
+    <!-- Login Overlay -->
+    <div id="loginOverlay" class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-dark/80 backdrop-blur-xl transition-all duration-500">
+        <div class="glass max-w-md w-full p-8 rounded-2xl shadow-2xl border border-white/10">
+            <div class="text-center mb-8">
+                <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary/20 text-primary mb-4">
+                    <i class="fa-solid fa-shield-halved text-2xl"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-white mb-2">Welcome Back</h2>
+                <p class="text-slate-400 text-sm">Masukan Nama Owner untuk mengakses database</p>
+            </div>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2 ml-1">Owner Name</label>
+                    <input type="text" id="ownerInput" 
+                        class="w-full bg-slate-800/50 border border-slate-700/50 text-white rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary focus:outline-none transition"
+                        placeholder="Contoh: Zidane Iqbal"
+                        onkeypress="if(event.key==='Enter') login()">
+                </div>
+                <button onclick="login()" class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-3 rounded-xl transition shadow-lg shadow-primary/20">
+                    Access Dashboard
+                </button>
+            </div>
+        </div>
+    </div>
+
     <div class="max-w-[1600px] mx-auto space-y-8">
 
         <div class="flex flex-col md:flex-row justify-between items-center gap-4">
@@ -108,11 +133,16 @@
                     <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">CLAN</span>
                     TRACKER
                 </h1>
-                <p class="text-slate-500 text-sm font-medium">Live Economy Database</p>
+                <p class="text-slate-500 text-sm font-medium">Owner: <span id="displayOwner" class="text-primary">Loading...</span></p>
             </div>
-            <div class="flex items-center gap-2 px-4 py-2 bg-green-500/10 border border-green-500/20 rounded-full">
-                <span class="animate-pulse h-2 w-2 rounded-full bg-green-400"></span>
-                <span class="text-green-400 text-xs font-bold tracking-wide uppercase">Live Connection</span>
+            <div class="flex items-center gap-3">
+                <button onclick="logout()" class="text-xs font-bold text-slate-500 hover:text-white transition uppercase tracking-widest bg-slate-800/50 px-3 py-2 rounded-lg border border-slate-700/50">
+                    <i class="fa-solid fa-right-from-bracket mr-1"></i> Switch Owner
+                </button>
+                <div class="flex items-center gap-2 px-4 py-2 bg-green-500/10 border border-green-500/20 rounded-full">
+                    <span class="animate-pulse h-2 w-2 rounded-full bg-green-400"></span>
+                    <span class="text-green-400 text-xs font-bold tracking-wide uppercase">Live Connection</span>
+                </div>
             </div>
         </div>
 
@@ -214,18 +244,48 @@
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
         let allData = [];
-        let avatarCache = {}; // Cache for Roblox avatar URLs
+        let avatarCache = {}; 
         let currentSort = { key: 'wing_core', order: 'desc' };
+        let currentOwner = localStorage.getItem('clan_owner_name') || null;
+        let realtimeSubscription = null;
+
+        function login() {
+            const input = document.getElementById('ownerInput').value.trim();
+            if (!input) return;
+            currentOwner = input;
+            localStorage.setItem('clan_owner_name', currentOwner);
+            checkAuth();
+        }
+
+        function logout() {
+            localStorage.removeItem('clan_owner_name');
+            location.reload();
+        }
+
+        function checkAuth() {
+            if (currentOwner) {
+                document.getElementById('loginOverlay').style.opacity = '0';
+                setTimeout(() => document.getElementById('loginOverlay').style.display = 'none', 500);
+                document.getElementById('displayOwner').innerText = currentOwner;
+                fetchData();
+                setupRealtime();
+            } else {
+                document.getElementById('loginOverlay').style.display = 'flex';
+                document.getElementById('loginOverlay').style.opacity = '1';
+                document.getElementById('ownerInput').focus();
+            }
+        }
 
         async function fetchData() {
             try {
                 const btn = document.querySelector('.fa-rotate');
                 if (btn) btn.classList.add('fa-spin');
 
-                // Fetch directly from Supabase
+                // Fetch directly from Supabase with Owner Filter
                 const { data, error } = await supabaseClient
                     .from('account_stat')
-                    .select('*');
+                    .select('*')
+                    .eq('owner_name', currentOwner);
 
                 if (error) throw error;
 
@@ -288,14 +348,23 @@
 
         // Setup Realtime Subscription
         function setupRealtime() {
-            supabaseClient
-                .channel('schema-db-changes')
+            if (realtimeSubscription) {
+                supabaseClient.removeChannel(realtimeSubscription);
+            }
+
+            realtimeSubscription = supabaseClient
+                .channel('filtered-db-changes')
                 .on(
                     'postgres_changes',
-                    { event: '*', schema: 'public', table: 'account_stat' },
+                    { 
+                        event: '*', 
+                        schema: 'public', 
+                        table: 'account_stat',
+                        filter: `owner_name=eq.${currentOwner}`
+                    },
                     (payload) => {
-                        console.log('Change received!', payload);
-                        fetchData(); // Simple approach: re-fetch on any change
+                        console.log('Filtered change received!', payload);
+                        fetchData();
                     }
                 )
                 .subscribe();
@@ -428,8 +497,7 @@
             sel.value = cur;
         }
 
-        fetchData();
-        setupRealtime();
+        checkAuth();
     </script>
 </body>
 
