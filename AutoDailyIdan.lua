@@ -505,7 +505,8 @@ local function sendWebhook()
                 soul = statsMap.Soul and statsMap.Soul.Value or 0,
                 arena_point = statsMap.PurpleDiamond and statsMap.PurpleDiamond.Value or 0,
                 guild_coin = getGuildCoin(),
-                last_updated = os.date("!%Y-%m-%dT%H:%M:%SZ")
+                last_updated = os.date("!%Y-%m-%dT%H:%M:%SZ"),
+                owner_name = "idan"
             }
 
             local response = Request({
