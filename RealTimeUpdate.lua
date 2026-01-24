@@ -78,7 +78,7 @@ local function sendStats()
             guild = statsMap.GuildName and statsMap.GuildName.Value or "None",
             level = parseNumber(levelText),
             gold = statsMap.Gold and statsMap.Gold.Value or 0,
-            wing_core = parseNumber(wingCoreText),
+            wing_core = statsMap.WingCore and statsMap.WingCore.Value or 0,
             ore = statsMap.Ore and statsMap.Ore.Value or 0,
             herbs = statsMap.Herb and statsMap.Herb.Value or 0,
             soul = statsMap.Soul and statsMap.Soul.Value or 0,
