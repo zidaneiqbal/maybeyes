@@ -50,7 +50,7 @@ local CONFIG = {
     
     -- Supabase Settings
     SUPABASE_URL = "https://jenqldfrbwzbnqkurwrm.supabase.co",
-    SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImplbnFsZGZyYnd6Ym5xa3Vyd3JtIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2ODgzODkyNywiZXhwIjoyMDg0NDE0OTI3fQ.iQGIflsOWkorAm4Bs7k9Ho5PncsgP-5vVDUecAVq4EU", -- Gantilah dengan Anon/Public Key Anda
+    SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImplbnFsZGZyYnd6Ym5xa3Vyd3JtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg4Mzg5MjcsImV4cCI6MjA4NDQxNDkyN30.q0-99ishp3kqLwTgdZYwsxGtmmuAxCzQr3RtTQZqF2w", -- Gantilah dengan Anon/Public Key Anda
 }
 
 -- ============================================================================
