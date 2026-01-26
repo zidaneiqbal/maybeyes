@@ -1,5 +1,6 @@
 local ReplicatedStorage = game:GetService('ReplicatedStorage')
 local Players = game:GetService('Players')
+local UserInputService = game:GetService('UserInputService')
 local LocalPlayer = Players.LocalPlayer
 
 -- =========================
@@ -134,10 +135,41 @@ local function getBackpackCount()
 end
 
 -- =========================
--- UI Creation (Mobile adapted, Transparent background)
+-- UI Helpers (Draggable)
 -- =========================
+local function makeDraggable(frame)
+    local dragging, dragInput, dragStart, startPos
+    
+    frame.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+            dragging = true
+            dragStart = input.Position
+            startPos = frame.Position
+            
+            input.Changed:Connect(function()
+                if input.UserInputState == Enum.UserInputState.End then
+                    dragging = false
+                end
+            end)
+        end
+    end)
+    
+    frame.InputChanged:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+            dragInput = input
+        end
+    end)
+    
+    UserInputService.InputChanged:Connect(function(input)
+        if input == dragInput and dragging then
+            local delta = input.Position - dragStart
+            frame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+        end
+    end)
+end
+
 -- =========================
--- UI Creation (Mobile friendly, Rounded corners)
+-- UI Creation (Compact, Draggable)
 -- =========================
 local ScreenGui = Instance.new('ScreenGui')
 ScreenGui.Name = 'AutoHatchUI'
@@ -147,47 +179,51 @@ ScreenGui.Parent = LocalPlayer:WaitForChild('PlayerGui')
 
 local MainFrame = Instance.new('Frame')
 MainFrame.Name = 'MainFrame'
-MainFrame.Size = UDim2.new(0.4, 0, 0.25, 0)
+MainFrame.Size = UDim2.new(0.3, 0, 0.18, 0) -- Smaller size
 MainFrame.Position = UDim2.new(0.05, 0, 0.05, 0)
 MainFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
 MainFrame.BackgroundTransparency = 0.3
 MainFrame.BorderSizePixel = 0
 MainFrame.Parent = ScreenGui
 
+makeDraggable(MainFrame) -- Make it draggable
+
 local UICorner = Instance.new('UICorner')
-UICorner.CornerRadius = UDim.new(0, 10)
+UICorner.CornerRadius = UDim.new(0, 8)
 UICorner.Parent = MainFrame
 
 local TitleLabel = Instance.new('TextLabel')
-TitleLabel.Size = UDim2.new(0.8, 0, 0.2, 0)
+TitleLabel.Size = UDim2.new(0.8, 0, 0.25, 0)
 TitleLabel.Position = UDim2.new(0.05, 0, 0.05, 0)
 TitleLabel.BackgroundTransparency = 1
 TitleLabel.Text = 'Auto Hatch Egg v2'
 TitleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-TitleLabel.TextScaled = true
+TitleLabel.TextScaled = false
+TitleLabel.TextSize = 14
 TitleLabel.TextXAlignment = Enum.TextXAlignment.Left
 TitleLabel.Parent = MainFrame
 
 local CloseButton = Instance.new('TextButton')
-CloseButton.Size = UDim2.new(0.15, 0, 0.15, 0)
-CloseButton.Position = UDim2.new(0.82, 0, 0.05, 0)
+CloseButton.Size = UDim2.new(0.12, 0, 0.2, 0)
+CloseButton.Position = UDim2.new(0.85, 0, 0.05, 0)
 CloseButton.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
 CloseButton.Text = 'X'
 CloseButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-CloseButton.TextScaled = true
+CloseButton.TextSize = 12
 CloseButton.BorderSizePixel = 0
 CloseButton.Parent = MainFrame
 
 local CloseCorner = Instance.new('UICorner')
-CloseCorner.CornerRadius = UDim.new(0, 5)
+CloseCorner.CornerRadius = UDim.new(0, 4)
 CloseCorner.Parent = CloseButton
 
 local InfoLabel = Instance.new('TextLabel')
-InfoLabel.Size = UDim2.new(0.9, 0, 0.45, 0)
-InfoLabel.Position = UDim2.new(0.05, 0, 0.3, 0)
+InfoLabel.Size = UDim2.new(0.9, 0, 0.4, 0)
+InfoLabel.Position = UDim2.new(0.05, 0, 0.35, 0)
 InfoLabel.BackgroundTransparency = 1
 InfoLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-InfoLabel.TextScaled = true
+InfoLabel.TextScaled = false
+InfoLabel.TextSize = 12
 InfoLabel.TextWrapped = true
 InfoLabel.Text = 'Loading...'
 InfoLabel.Parent = MainFrame
@@ -198,7 +234,7 @@ ToggleButton.Position = UDim2.new(0.05, 0, 0.75, 0)
 ToggleButton.BackgroundColor3 = Color3.fromRGB(50, 150, 50)
 ToggleButton.Text = 'Script: ON'
 ToggleButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-ToggleButton.TextScaled = true
+ToggleButton.TextSize = 10
 ToggleButton.BorderSizePixel = 0
 ToggleButton.Parent = MainFrame
 
