@@ -193,10 +193,10 @@ UICorner.CornerRadius = UDim.new(0, 8)
 UICorner.Parent = MainFrame
 
 local TitleLabel = Instance.new('TextLabel')
-TitleLabel.Size = UDim2.new(0.8, 0, 0.25, 0)
+TitleLabel.Size = UDim2.new(0.8, 0, 0.1, 0)
 TitleLabel.Position = UDim2.new(0.05, 0, 0.05, 0)
 TitleLabel.BackgroundTransparency = 1
-TitleLabel.Text = 'Auto Hatch Egg v2'
+TitleLabel.Text = 'Auto Hatch Egg'
 TitleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 TitleLabel.TextScaled = false
 TitleLabel.TextSize = 8
@@ -209,7 +209,7 @@ CloseButton.Position = UDim2.new(0.85, 0, 0.05, 0)
 CloseButton.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
 CloseButton.Text = 'X'
 CloseButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-CloseButton.TextSize = 12
+CloseButton.TextSize = 8
 CloseButton.BorderSizePixel = 0
 CloseButton.Parent = MainFrame
 
@@ -218,8 +218,8 @@ CloseCorner.CornerRadius = UDim.new(0, 4)
 CloseCorner.Parent = CloseButton
 
 local InfoLabel = Instance.new('TextLabel')
-InfoLabel.Size = UDim2.new(0.9, 0, 0.4, 0)
-InfoLabel.Position = UDim2.new(0.05, 0, 0.35, 0)
+InfoLabel.Size = UDim2.new(0.9, 0, 0.2, 0)
+InfoLabel.Position = UDim2.new(0.05, 0, 0.25, 0)
 InfoLabel.BackgroundTransparency = 1
 InfoLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 InfoLabel.TextScaled = false
@@ -230,7 +230,7 @@ InfoLabel.Parent = MainFrame
 
 local ToggleButton = Instance.new('TextButton')
 ToggleButton.Size = UDim2.new(0.9, 0, 0.2, 0)
-ToggleButton.Position = UDim2.new(0.05, 0, 0.75, 0)
+ToggleButton.Position = UDim2.new(0.05, 0, 0.5, 0)
 ToggleButton.BackgroundColor3 = Color3.fromRGB(50, 150, 50)
 ToggleButton.Text = 'Script: ON'
 ToggleButton.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -502,4 +502,3 @@ spawn(function()
         updateUI()
     end
 end)
-
