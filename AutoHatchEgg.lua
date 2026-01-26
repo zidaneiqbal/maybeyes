@@ -199,7 +199,7 @@ TitleLabel.BackgroundTransparency = 1
 TitleLabel.Text = 'Auto Hatch Egg v2'
 TitleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 TitleLabel.TextScaled = false
-TitleLabel.TextSize = 14
+TitleLabel.TextSize = 8
 TitleLabel.TextXAlignment = Enum.TextXAlignment.Left
 TitleLabel.Parent = MainFrame
 
@@ -223,7 +223,7 @@ InfoLabel.Position = UDim2.new(0.05, 0, 0.35, 0)
 InfoLabel.BackgroundTransparency = 1
 InfoLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 InfoLabel.TextScaled = false
-InfoLabel.TextSize = 12
+InfoLabel.TextSize = 8
 InfoLabel.TextWrapped = true
 InfoLabel.Text = 'Loading...'
 InfoLabel.Parent = MainFrame
@@ -234,7 +234,7 @@ ToggleButton.Position = UDim2.new(0.05, 0, 0.75, 0)
 ToggleButton.BackgroundColor3 = Color3.fromRGB(50, 150, 50)
 ToggleButton.Text = 'Script: ON'
 ToggleButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-ToggleButton.TextSize = 10
+ToggleButton.TextSize = 8
 ToggleButton.BorderSizePixel = 0
 ToggleButton.Parent = MainFrame
 
@@ -502,3 +502,4 @@ spawn(function()
         updateUI()
     end
 end)
+
