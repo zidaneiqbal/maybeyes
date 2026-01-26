@@ -228,34 +228,9 @@ InfoLabel.TextWrapped = true
 InfoLabel.Text = 'Loading...'
 InfoLabel.Parent = MainFrame
 
-local ToggleButton = Instance.new('TextButton')
-ToggleButton.Size = UDim2.new(0.9, 0, 0.2, 0)
-ToggleButton.Position = UDim2.new(0.05, 0, 0.5, 0)
-ToggleButton.BackgroundColor3 = Color3.fromRGB(50, 150, 50)
-ToggleButton.Text = 'Script: ON'
-ToggleButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-ToggleButton.TextSize = 8
-ToggleButton.BorderSizePixel = 0
-ToggleButton.Parent = MainFrame
-
-local ToggleCorner = Instance.new('UICorner')
-ToggleCorner.CornerRadius = UDim.new(0, 5)
-ToggleCorner.Parent = ToggleButton
-
 -- =========================
 -- UI Event Listeners
 -- =========================
-ToggleButton.MouseButton1Click:Connect(function()
-    scriptEnabled = not scriptEnabled
-    if scriptEnabled then
-        ToggleButton.Text = 'Script: ON'
-        ToggleButton.BackgroundColor3 = Color3.fromRGB(50, 150, 50)
-    else
-        ToggleButton.Text = 'Script: OFF'
-        ToggleButton.BackgroundColor3 = Color3.fromRGB(150, 50, 50)
-    end
-end)
-
 CloseButton.MouseButton1Click:Connect(function()
     scriptRunning = false
     ScreenGui:Destroy()
