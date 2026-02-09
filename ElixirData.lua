@@ -309,9 +309,9 @@ local function calculateElixirs(targetPoints, availableElixirs, adjustRange)
         return {}, 0
     end
 
-    -- Sort points Descending (Optimized: more efficient comparison)
+    -- Sort points Ascending (Optimized: more efficient comparison)
     table.sort(availableElixirs, function(a, b) 
-        return a.points > b.points 
+        return a.points < b.points 
     end)
 
     -- Pre-allocate used table, reduced memory allocation
@@ -751,6 +751,7 @@ task.spawn(function()
         end
     end
 end)
+
 
 
 
