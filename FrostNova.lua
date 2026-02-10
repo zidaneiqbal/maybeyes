@@ -351,14 +351,14 @@ local function createToggle(name, yPos)
 	local btn = Instance.new("TextButton")
 	btn.Size = UDim2.new(0, 40, 0, 18)
 	btn.Position = UDim2.new(1, -40, 0.5, -9)
-	btn.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
+	btn.BackgroundColor3 = Color3.fromRGB(50, 180, 100)
 	btn.Text = ""
 	btn.Parent = toggleFrame
 	Instance.new("UICorner", btn).CornerRadius = UDim.new(1, 0) -- Bulat sempurna (Capsule)
 	
 	local indicator = Instance.new("Frame")
 	indicator.Size = UDim2.new(0, 14, 0, 14)
-	indicator.Position = UDim2.new(0, 2, 0.5, -7)
+	indicator.Position = UDim2.new(1, -16, 0.5, -7)
 	indicator.BackgroundColor3 = Color3.new(1, 1, 1)
 	indicator.Parent = btn
 	Instance.new("UICorner", indicator).CornerRadius = UDim.new(1, 0)
@@ -381,3 +381,6 @@ end
 createToggle("Auto Skill & Teleport", 0.67)
 -- createToggle("Auto Farm", 0.68)
 -- createToggle("Infinite Jump", 0.84)
+
+if isSkillRunning then task.spawn(startSkillLoop) end
+if isTPHookRunning then startTeleportHook() end
