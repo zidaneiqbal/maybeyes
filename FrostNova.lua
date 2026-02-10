@@ -14,7 +14,7 @@ local equipRemote = skillPath:WaitForChild("\232\163\133\229\164\135\230\138\128
 local useRemote = skillPath:WaitForChild("\228\189\191\231\148\168\230\138\128\232\131\189")
 local TeleportRemote = RS:WaitForChild("\228\186\139\228\187\182"):WaitForChild("\229\133\172\231\148\168"):WaitForChild("\229\156\186\230\153\175"):WaitForChild("\228\188\160\233\128\129")
 
-local isSkillRunning, isTPHookRunning, tpConnection = false, false, nil
+local isSkillRunning, isTPHookRunning, tpConnection = true, true, nil
 local settings = { 
     ID1 = "9",
     ID2 = "1",
@@ -363,18 +363,18 @@ local function createToggle(name, yPos)
 	indicator.Parent = btn
 	Instance.new("UICorner", indicator).CornerRadius = UDim.new(1, 0)
 	
-	local status = false
+	local status = true
 	btn.MouseButton1Click:Connect(function()
 		status = not status
-    isSkillRunning = not isSkillRunning
-    isTPHookRunning = not isTPHookRunning
+        isSkillRunning = not isSkillRunning
+        isTPHookRunning = not isTPHookRunning
 		local goalPos = status and UDim2.new(1, -16, 0.5, -7) or UDim2.new(0, 2, 0.5, -7)
 		local goalColor = status and Color3.fromRGB(50, 180, 100) or Color3.fromRGB(80, 80, 80)
 		
 		TweenService:Create(indicator, TweenInfo.new(0.2), {Position = goalPos}):Play()
 		TweenService:Create(btn, TweenInfo.new(0.2), {BackgroundColor3 = goalColor}):Play()
-    if isSkillRunning then task.spawn(startSkillLoop) end
-    if isTPHookRunning then startTeleportHook() end
+        if isSkillRunning then task.spawn(startSkillLoop) end
+        if isTPHookRunning then startTeleportHook() end
 	end)
 end
 
