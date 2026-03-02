@@ -1,6 +1,7 @@
 -- Init Toggles
 getgenv().AutoPetEnabled = false
 getgenv().AutoRuneEnabled = false
+getgenv().AutoSellEnabled = false
 
 -- Run Scripts in background
 task.spawn(function()
@@ -38,7 +39,7 @@ MainFrame.Name = "MainFrame"
 MainFrame.Parent = ScreenGui
 MainFrame.BackgroundColor3 = Color3.fromRGB(35, 35, 45)
 MainFrame.Position = UDim2.new(0.5, -100, 0.2, 0)
-MainFrame.Size = UDim2.new(0, 200, 0, 125)
+MainFrame.Size = UDim2.new(0, 200, 0, 155)
 MainFrame.BorderSizePixel = 0
 MainFrame.Active = true
 MainFrame.Draggable = true -- Simple drag
@@ -72,6 +73,7 @@ CloseButton.TextSize = 16
 CloseButton.MouseButton1Click:Connect(function()
     getgenv().AutoPetEnabled = false
     getgenv().AutoRuneEnabled = false
+    getgenv().AutoSellEnabled = false
     ScreenGui:Destroy()
     print("❌ Swipt UI Terminated and Toggles Disabled")
 end)
@@ -181,5 +183,6 @@ end
 -- Create the Toggles
 createToggle("Pet", 50, "AutoPetEnabled")
 createToggle("Rune", 80, "AutoRuneEnabled")
+createToggle("Auto Sell All", 110, "AutoSellEnabled")
 
 print("--- [ MainUI Loaded ] ---")
