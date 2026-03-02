@@ -159,10 +159,10 @@ local conn = dataSyncEvent.Event:Connect(function(data)
         if isGoodRune then
             -- Auto Favorite Rune (Only run once per rune)
             if not favoritedRunes[index] and not isLocked then
-                local args = {
-                    index -- using the rune's unique index
-                }
-                favoriteRuneEvent:FireServer(unpack(args))
+                -- local args = {
+                --     index -- using the rune's unique index
+                -- }
+                -- favoriteRuneEvent:FireServer(unpack(args))
                 favoritedRunes[index] = true -- Mark as favorited so we don't spam
                 
                 -- Send Discord Webhook
@@ -173,8 +173,8 @@ local conn = dataSyncEvent.Event:Connect(function(data)
                 end)
             end
         else
-            -- Add to Sell List if not Locked and not Nil
-            if not isLocked and index then
+            -- Add to Sell List if AutoSellEnabled is ON, not Locked, and not Nil
+            if getgenv().AutoSellEnabled and not isLocked and index then
                 runesToSell[index] = true
                 sellCount = sellCount + 1
             end
