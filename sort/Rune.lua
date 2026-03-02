@@ -88,8 +88,16 @@ function calculateCriticalRate(coefficient, quality)
     return finalValue
 end
 
+-- Bersihkan koneksi lama jika script dieksekusi ulang
+if getgenv().SwiptRuneConnections then
+    for _, conn in ipairs(getgenv().SwiptRuneConnections) do
+        pcall(function() conn:Disconnect() end)
+    end
+end
+getgenv().SwiptRuneConnections = {}
+
 -- Listen for data updates
-dataSyncEvent.Event:Connect(function(data)
+local conn = dataSyncEvent.Event:Connect(function(data)
     if not getgenv().AutoRuneEnabled then return end
     
     local runesData = data["背包"] -- Backpack/Inventory
@@ -184,5 +192,6 @@ dataSyncEvent.Event:Connect(function(data)
         print("Process completed, no runes to delete.")
     end
 end)
+table.insert(getgenv().SwiptRuneConnections, conn)
 
 print("Auto rune processing script loaded - improved rules")
