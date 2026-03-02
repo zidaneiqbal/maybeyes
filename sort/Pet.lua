@@ -75,8 +75,36 @@ local function handlePetData(data)
 
     -- Cek Pet di tas (背包)
     if data["背包"] and #data["背包"] > 0 then
+        local petsToSell = {}
+        local sellCount = 0
+        
         for _, pet in ipairs(data["背包"]) do
             printPetInfo(pet, "BACKPACK")
+            
+            -- Auto Sell Logic
+            if getgenv().AutoSellEnabled then
+                local isFavorited = pet["收藏"]
+                
+                -- Cek apakah pet lemah (tidak memenuhi minimal potential)
+                local isWeak = true
+                if type(pet["最大资质系数"]) == "table" and type(pet["最大资质系数"][2]) == "number" and pet["最大资质系数"][2] > minPoten then
+                    isWeak = false
+                end
+                
+                local petId = pet["索引"]
+                -- Kalau pet lemah dan tidak di-lock/favorited, masukkan ke list jual
+                if isWeak and not isFavorited and petId then
+                    petsToSell[petId] = true
+                    sellCount = sellCount + 1
+                end
+            end
+        end
+        
+        if sellCount > 0 then
+            print("🛑 Menjual " .. sellCount .. " pet otomatis...")
+            local args = { petsToSell }
+            game:GetService("ReplicatedStorage"):WaitForChild("\228\186\139\228\187\182"):WaitForChild("\229\133\172\231\148\168"):WaitForChild("\229\174\160\231\137\169"):WaitForChild("\229\135\186\229\148\174"):FireServer(unpack(args))
+            print("✅ Selesai menjual " .. sellCount .. " pet.")
         end
     end
 end
