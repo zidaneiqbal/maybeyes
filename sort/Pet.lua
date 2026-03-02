@@ -81,10 +81,18 @@ local function handlePetData(data)
     end
 end
 
+-- Bersihkan koneksi lama jika script dieksekusi ulang
+if getgenv().SwiptPetConnections then
+    for _, conn in ipairs(getgenv().SwiptPetConnections) do
+        pcall(function() conn:Disconnect() end)
+    end
+end
+getgenv().SwiptPetConnections = {}
+
 -- Monitor semua event masuk
 for _, remote in pairs(petFolder:GetChildren()) do
     if remote:IsA("RemoteEvent") then
-        remote.OnClientEvent:Connect(function(...)
+        local conn = remote.OnClientEvent:Connect(function(...)
             local args = {...}
             -- local sampleDumpStr = dump(args)
             -- writefile("PetData_sample.txt", sampleDumpStr)
@@ -97,5 +105,6 @@ for _, remote in pairs(petFolder:GetChildren()) do
             end
             print("------------------------------------------")
         end)
+        table.insert(getgenv().SwiptPetConnections, conn)
     end
 end
