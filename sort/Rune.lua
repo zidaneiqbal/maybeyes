@@ -159,10 +159,10 @@ local conn = dataSyncEvent.Event:Connect(function(data)
         if isGoodRune then
             -- Auto Favorite Rune (Only run once per rune)
             if not favoritedRunes[index] and not isLocked then
-                -- local args = {
-                --     index -- using the rune's unique index
-                -- }
-                -- favoriteRuneEvent:FireServer(unpack(args))
+                local args = {
+                    index -- using the rune's unique index
+                }
+                favoriteRuneEvent:FireServer(unpack(args))
                 favoritedRunes[index] = true -- Mark as favorited so we don't spam
                 
                 -- Send Discord Webhook
