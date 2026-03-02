@@ -97,9 +97,7 @@ end
 getgenv().SwiptRuneConnections = {}
 
 -- Listen for data updates
-local conn = dataSyncEvent.Event:Connect(function(data)
-    if not getgenv().AutoRuneEnabled then return end
-    
+local conn = dataSyncEvent.Event:Connect(function(data)    
     local runesData = data["背包"] -- Backpack/Inventory
     local runesToSell = {}
     local sellCount = 0
@@ -174,7 +172,7 @@ local conn = dataSyncEvent.Event:Connect(function(data)
             end
         else
             -- Add to Sell List if AutoSellEnabled is ON, not Locked, and not Nil
-            if getgenv().AutoSellEnabled and not isLocked and index then
+            if not isLocked and index then
                 runesToSell[index] = true
                 sellCount = sellCount + 1
             end
