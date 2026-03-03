@@ -154,7 +154,7 @@ local conn = dataSyncEvent.Event:Connect(function(data)
         end
 
         -- Is Rune Good?
-        local isGoodRune = (critCount >= 2) or (HprCount >= 2) or (bossDamageCount >= 2) or (atsBoostCount >= 2) or (drCount >= 4)
+        local isGoodRune = (critCount >= 3) or (HprCount >= 3) or (bossDamageCount >= 3) or (atsBoostCount >= 4) or (drCount >= 4) or (goldCount >= 4)
 
         if isGoodRune then
             -- Auto Favorite Rune (Only run once per rune)
