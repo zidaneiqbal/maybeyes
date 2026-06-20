@@ -27,7 +27,7 @@ print('Target game detected, executing script...')
 -- ============================================================================
 local CONFIG = {
     -- Webhook Settings
-    WEBHOOK_URL = 'https://discord.com/api/webhooks/1427270496797589606/Wg1Lt11GaVxKwrl3vlQCVuG4WqcH2VRkOOrEENCn5I-DHYx5IiXmmxptyIkN81fx_WGP',
+    WEBHOOK_URL = 'https://discordapp.com/api/webhooks/1517971733267878110/K2Ojia-jpFlBCL2BdzrjOtRLOwS5XyKBr2Ib8oEYfx4nZbHz9IJcWJdcWOZZl6uPaLju',
     
     -- Guild Donation Settings
     DONATION_INTERVAL = 0.5,
