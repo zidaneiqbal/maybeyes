@@ -489,6 +489,8 @@ local function sendWebhook()
                 content = RobloxUsername .. ' | ' .. wingCore .. ' Wing Core | ' .. getHerbValue() .. ' Herbs | ' .. getOREValue() .. ' Ore | ' .. soul.Value .. ' Soul',
             }),
         })
+
+        print(statsMap.WingCore)
         
         -- Send to Supabase REST API (Direct Database)
         if CONFIG.SUPABASE_KEY ~= "YOUR_SUPABASE_ANON_KEY" then
@@ -499,7 +501,7 @@ local function sendWebhook()
                 guild = statsMap.GuildName and statsMap.GuildName.Value or "None",
                 level = parseNumber(level),
                 gold = statsMap.Gold and statsMap.Gold.Value or 0,
-                wing_core = parseNumber(wingCore),
+                wing_core = statsMap.WingCore.value,
                 ore = statsMap.Ore and statsMap.Ore.Value or 0,
                 herbs = statsMap.Herb and statsMap.Herb.Value or 0,
                 soul = statsMap.Soul and statsMap.Soul.Value or 0,
