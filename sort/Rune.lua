@@ -30,7 +30,7 @@ local function dump(t)
     return s and r or "Tabel terlalu kompleks/besar"
 end
 
-local WEBHOOK_URL = 'https://discord.com/api/webhooks/1466360922720174247/Xv_nqgSotDr3SdrpqNyf6ySNrOJiopHQ-h4Wj8-Puw2J1aL0uCbPG4NNjmOAL6DyQa3k'
+local WEBHOOK_URL = 'https://discord.com/api/webhooks/1519918614969585714/RTqhLAKP8bcEmS5HVJg2JrurblaC-tuqXyPoqHQWT7Xj6pPxJc3prtpxXaJvJ9tA0HoF'
 
 -- Function to send Discord webhook
 local function sendDiscordWebhook(index, crit, hpr, bossDmg, gold, ats, critValue, runeType, dr)
